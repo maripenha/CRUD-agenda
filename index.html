@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD-agenda</title>
+</head>
+<body>
+    <script>
+        let arrContatos = [];
+
+function showMenu() {
+ return parseInt(
+    prompt(`
+          Agenda
+          [1] - Adicionar contato
+          [2] - Editar contato(s)
+          [3] - Visualizar contatos
+          [4] - Excluir contatos
+          [5] - Sair do programa
+      `)
+  );
+}
+
+const AddContato = () => {
+  const nomeContato = prompt("Informe o nome:");
+  const emailContato = prompt("Informe o email:");
+  const numeroContato = prompt("Informe o número de telefone:");
+  const Data = Date()
+
+  if (!nomeContato || !emailContato || !numeroContato) {
+    alert("Os campos são obrigatórios!");
+  }
+
+  arrContatos.push({ nomeContato, emailContato, numeroContato, Data});
+
+  console.log(arrContatos);
+};
+
+const ListContato = () => {
+
+  let ListContato = '';
+
+  arrContatos.forEach((dataUser) => {
+    ListContato +=  `Nome: ${dataUser.nomeContato}, Email: ${dataUser.emailContato} ${dataUser.Data}`
+  });
+
+  console.log(ListContato);
+
+  alert("Lista de contatos:" + ListContato);
+}
+
+function editContato () {
+  const encontrarContato = prompt("Informe o contato que você deseja atualizar!")
+  const contatoEncontrado = arrContatos.find(contato => contato.emailContato === encontrarContato)
+
+  if (!contatoEncontrado) {
+      alert("Contato não foi encontrado!")
+
+      return;
+  }
+
+  const novoNumero = prompt("Informe o novo número de telefone: ")
+  const novoEmail = prompt("Informe o novo e-mail: ")
+    
+  if (novoEmail){
+      contatoEncontrado.nomeContato = novoEmail
+  }
+  alert("Usuário foi atualizado com sucesso!")
+}
+function deleteContato() {
+  const emailDelete = prompt("Informe o email para excluir contato:")
+  const indiceDelete = arrContatos.findIndex(email => email.emailContato === emailDelete)
+
+  const confirmacao = window.confirm("Você deseja mesmo excluir o contato "+emailDelete);
+
+  if (confirmacao) {
+      arrContatos.splice(indiceDelete, 1)
+  }
+
+  alert("Contato deletado!")
+}
+let opcaoContato = true;
+
+while (opcaoContato) {
+switch (showMenu()){
+case 1:
+AddContato();
+break;
+case 2:
+editContato();
+break;
+case 3:
+ListContato();
+break;
+case 4:
+deleteContato();
+break;
+case 5:
+alert("Saindo do programa...");
+opcaoContato = false;
+break;
+default:
+alert("Opção inválida, tente novamente!");
+break;
+}
+}
+
+    </script>
+</body>
+</html>
